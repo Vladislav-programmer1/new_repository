@@ -2,18 +2,36 @@ import sys
 import sqlite3
 
 from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QApplication
+from PyQt6.QtGui import QAction
 from PyQt6 import uic
+
+from AddEditCoffee import AddEditCoffee
 
 
 class CoffeView(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
+        self.set_menu()
 
         self.find_button.clicked.connect(self.find_sorts)
         self.connection = sqlite3.connect('coffe_db')
 
+    def set_menu(self):
+        uic.loadUi('main.ui', self)
+        menu = self.menuBar().addMenu('Действия')
+
+        add_coffe_action = QAction('Окно добавления кофе', self)
+        add_coffe_action.triggered.connect(self.open_add_edit_coffe_window)
+        menu.addAction(add_coffe_action)
+
+        main_action = QAction('Вернуться на главную страницу', self)
+        main_action.triggered.connect(self.return_to_main)
+        menu.addAction(main_action)
+
     def find_sorts(self):
+        self.tableWidget.setRowCount(0)
+        self.tableWidget.setColumnCount(0)
+
         name = '%' + self.name.text() + '%'
         cursor = self.connection.cursor()
         items = cursor.execute("""SELECT * FROM coffe WHERE
@@ -29,6 +47,17 @@ class CoffeView(QMainWindow):
                 self.tableWidget.setItem(i, j, QTableWidgetItem(str(item)))
 
         self.tableWidget.resizeColumnsToContents()
+
+    def open_add_edit_coffe_window(self):
+        window = AddEditCoffee(self.connection)
+        self.setCentralWidget(window)
+        self.menuBar().show()
+
+    def return_to_main(self):
+        self.setCentralWidget(None)
+        self.set_menu()
+
+        self.find_sorts()
 
 
 def except_hook(cls, exception, traceback):
