@@ -66,7 +66,7 @@ class AddEditCoffee(QWidget, Ui_Form):
 
     def add_coffe(self):
         try:
-            title = get_coffe_information(
+            variety = get_coffe_information(
                 self, 'Название', 'Введите название кофе', QInputDialog.getText
             )
 
@@ -95,7 +95,7 @@ class AddEditCoffee(QWidget, Ui_Form):
             ).fetchone()[0]
             self.connection.cursor().execute(
                 """INSERT INTO coffe VALUES(?, ?, ?, ?, ?, ?, ?)""",
-                (new_id, title, degree_of_roasting, in_grains,
+                (new_id, variety, degree_of_roasting, in_grains,
                  taste_description, price, volume))
             self.connection.commit()
         except EmptyUserInputError:
