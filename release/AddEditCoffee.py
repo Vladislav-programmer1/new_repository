@@ -116,9 +116,10 @@ class AddEditCoffee(QWidget, Ui_Form):
                    6: lambda x: float(x)}
 
         field = self.table.horizontalHeaderItem(column).text()
+        id = int(self.table.item(row, 0).text())
         try:
             self.connection.cursor().execute(
-                f"""UPDATE coffe SET {field} = ?""",
+                f"""UPDATE coffe SET {field} = ? WHERE id = {id}""",
                 (actions[column](item.text()),))
         except Exception as mistake:
             message = QMessageBox(self)
