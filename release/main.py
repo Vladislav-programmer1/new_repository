@@ -37,8 +37,7 @@ class CoffeView(QMainWindow, Ui_MainWindow):
         name = '%' + self.name.text() + '%'
         cursor = self.connection.cursor()
         items = cursor.execute("""SELECT * FROM coffe WHERE
-                                                    variety LIKE ?
-                                                 """, (name,))
+                                       variety LIKE ?""", (name,))
         self.tableWidget.setColumnCount(7)
         self.tableWidget.setHorizontalHeaderLabels([description[0] for description in
                                                     cursor.description])
