@@ -4,7 +4,7 @@ import sqlite3
 from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QApplication
 from PyQt6.QtGui import QAction
 
-from release.AddEditCoffee import AddEditCoffee
+from AddEditCoffee import AddEditCoffee
 from main_form import Ui_MainWindow
 
 
