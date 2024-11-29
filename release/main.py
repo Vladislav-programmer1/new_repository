@@ -14,7 +14,7 @@ class CoffeView(QMainWindow, Ui_MainWindow):
         self.set_interface()
 
         self.find_button.clicked.connect(self.find_sorts)
-        self.connection = sqlite3.connect('../data/coffe_db')
+        self.connection = sqlite3.connect('data/coffe_db')
 
         self.find_sorts()
 
