@@ -61,6 +61,9 @@ class CoffeView(QMainWindow, Ui_MainWindow):
 
         self.find_sorts()
 
+    def closeEvent(self, a0):
+        self.connection.close()
+
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
