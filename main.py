@@ -3,21 +3,23 @@ import sqlite3
 
 from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QApplication
 from PyQt6.QtGui import QAction
-from PyQt6 import uic
 
 from AddEditCoffee import AddEditCoffee
+from main_form import Ui_MainWindow
 
 
-class CoffeView(QMainWindow):
+class CoffeView(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.set_menu()
+        self.set_interface()
 
         self.find_button.clicked.connect(self.find_sorts)
-        self.connection = sqlite3.connect('coffe_db')
+        self.connection = sqlite3.connect('data/coffe_db')
 
-    def set_menu(self):
-        uic.loadUi('main.ui', self)
+        self.find_sorts()
+
+    def set_interface(self):
+        self.setupUi(self)
         menu = self.menuBar().addMenu('Действия')
 
         add_coffe_action = QAction('Окно добавления кофе', self)
@@ -55,7 +57,7 @@ class CoffeView(QMainWindow):
 
     def return_to_main(self):
         self.setCentralWidget(None)
-        self.set_menu()
+        self.set_interface()
 
         self.find_sorts()
 
