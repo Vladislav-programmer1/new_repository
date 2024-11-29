@@ -4,7 +4,7 @@ import sqlite3
 from PyQt6.QtWidgets import QMainWindow, QTableWidgetItem, QApplication
 from PyQt6.QtGui import QAction
 
-from AddEditCoffee import AddEditCoffee
+from release.AddEditCoffee import AddEditCoffee
 from main_form import Ui_MainWindow
 
 
@@ -14,7 +14,7 @@ class CoffeView(QMainWindow, Ui_MainWindow):
         self.set_interface()
 
         self.find_button.clicked.connect(self.find_sorts)
-        self.connection = sqlite3.connect('data/coffe_db')
+        self.connection = sqlite3.connect('../data/coffe_db')
 
         self.find_sorts()
 
